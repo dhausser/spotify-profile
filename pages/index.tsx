@@ -1,10 +1,16 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
-import { token } from '../utils/spotify'
 
 export default function Home() {
+  const router = useRouter()
   const [accessToken, setAccessToken] = useState('')
+
+  const { asPath } = router
+  const { hash } = window.location
+
+  const token = new URLSearchParams(hash)
 
   useEffect(() => {
     setAccessToken(token)
