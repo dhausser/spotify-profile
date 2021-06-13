@@ -10,7 +10,8 @@ export default function Home() {
   const { asPath } = router
   const { hash } = window.location
 
-  const token = new URLSearchParams(hash)
+  const params = new URLSearchParams(hash)
+  // const token = params[0]
 
   useEffect(() => {
     setAccessToken(token)
