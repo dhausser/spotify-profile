@@ -1,7 +1,8 @@
-import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
-import styles from '../styles/Home.module.css'
+import { useState, useEffect, useCallback } from 'react'
+import useSWR from 'swr'
+import Login from '../components/login'
+import Profile from '../components/profile'
 
 export default function Home() {
   const router = useRouter()
@@ -17,28 +18,10 @@ export default function Home() {
     if (accessTokenParam && refreshTokenParam) {
       setAccessToken(accessTokenParam)
       setRefreshToken(refreshTokenParam)
+      localStorage.setItem('accessToken', accessTokenParam)
+      router.push('/')
     }
   }, [])
 
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Spotify Profile</title>
-        <meta name="description" content="Spotify Profile" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className={styles.main}>
-        <h1 className={styles.title}>Spotify Profile</h1>
-        <br />
-        {accessToken ? (
-          <div>
-            <p>Access token: {accessToken}</p>
-            <p>Refresh token: {refreshToken}</p>
-          </div>
-        ) : (
-          <a href="/api/login">Login</a>
-        )}
-      </main>
-    </div>
-  )
+  return accessToken ? <Profile accessToken={accessToken} /> : <Login />
 }
