@@ -5,19 +5,20 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
   const router = useRouter()
-  const [accessToken, setAccessToken] = useState('')
+  const [accessToken, setAccessToken] = useState<string | null>(null)
+  const [refreshToken, setRefreshToken] = useState<string | null>(null)
 
   const { asPath } = router
-  const { hash } = window.location
-
-  const params = new URLSearchParams(hash)
-  // const token = params[0]
+  const hashParams = new URLSearchParams(asPath)
+  const accessTokenParam = hashParams.get('/#access_token')
+  const refreshTokenParam = hashParams.get('refresh_token')
 
   useEffect(() => {
-    setAccessToken(token)
+    if (accessTokenParam && refreshTokenParam) {
+      setAccessToken(accessTokenParam)
+      setRefreshToken(refreshTokenParam)
+    }
   }, [])
-
-  if (accessToken) return <p>Access token: {accessToken}</p>
 
   return (
     <div className={styles.container}>
@@ -29,7 +30,14 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>Spotify Profile</h1>
         <br />
-        <a href="/api/login">Login</a>
+        {accessToken ? (
+          <div>
+            <p>Access token: {accessToken}</p>
+            <p>Refresh token: {refreshToken}</p>
+          </div>
+        ) : (
+          <a href="/api/login">Login</a>
+        )}
       </main>
     </div>
   )
