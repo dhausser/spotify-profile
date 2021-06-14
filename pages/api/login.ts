@@ -19,7 +19,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
       response_type: 'code',
       client_id,
       scope,
-      redirect_uri: 'http://localhost:3000/api/callback',
+      redirect_uri,
       state,
     })}`
   )
