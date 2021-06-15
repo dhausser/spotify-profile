@@ -21,7 +21,7 @@ export default function Home() {
       localStorage.setItem('accessToken', accessTokenParam)
       router.push('/')
     }
-  }, [])
+  }, [accessTokenParam, refreshTokenParam, router])
 
   return accessToken ? <Profile accessToken={accessToken} /> : <Login />
 }
