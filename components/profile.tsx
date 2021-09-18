@@ -10,8 +10,6 @@ export default function Profile({ accessToken }: Props) {
   if (isLoading) return <p>loading...</p>
   if (isError) return <p>failed to load</p>
 
-  console.log(user)
-
   return (
     <section>
       <h2>Welcome</h2>
